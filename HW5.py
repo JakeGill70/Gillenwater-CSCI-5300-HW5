@@ -2,15 +2,26 @@
 # Gillenwaterj@etsu.edu
 
 import sys # Access command line arguments
-import os # Run OS-specific commands
 import os.path # Inquire information about a supposed file path
+ # Access all of the different types of file extension handlers for the CoR pattern
+from Handler.Docx import Handler_docx
+from Handler.Html import Handler_html
+from Handler.Mp3 import Handler_mp3
+from Handler.Txt import Handler_txt
 
 class Driver:
+    acceptedExtensions = ["docx", "mp3", "html", "txt"]
+
     @staticmethod
     def main():
         # Get the file name from the list of command line arguments
-        print(sys.argv[1])
-        fileName = sys.argv[1]
+        try:
+            fileName = sys.argv[1]
+        except:
+            # If the file does not exists, then no further operations
+            # can be performed, so the program should close itself.
+            print("No argument provided. Please include the name of the file that you would like to open.")
+            exit()
 
         # Make sure that the file exists
         if( not os.path.isfile(fileName)):
@@ -31,6 +42,13 @@ class Driver:
             # can be performed, so the program should close itself.
             print("File extension could not be determined.")
             exit()
+
+        # Check to make sure the file extension is recognized
+        if(fileExtension not in Driver.acceptedExtensions):
+             # If the file extension is not recognized, then no further operations
+            # can be performed, so the program should close itself.
+            print(f"File extension .{fileExtension} is unknown.")
+            exit()
         
         # Launch the appropriate app based on the file extension
         Driver.openFileInApplication(fileName, fileExtension)
@@ -45,16 +63,20 @@ class Driver:
 
     @staticmethod
     def openFileInApplication(fileName, fileExtension):
-        applicationName = ""
-        if(fileExtension == "docx"):
-            applicationName = "winword"
-        elif(fileExtension == "txt"):
-            applicationName = "notepad"
-        elif(fileExtension == "mp3"):
-            applicationName = "wmplayer"
-        elif(fileExtension in ["htm", "html", "shtml", "xhtml"]):
-            applicationName = "firefox"
-        os.system(f"start {applicationName} {fileName}")
+
+        # Create instances of all of the different handlers
+        docx = Handler_docx()
+        html = Handler_html()
+        mp3 =  Handler_mp3()
+        txt =  Handler_txt()
+
+        # Establish the chain of responsibility
+        docx.setNextHandler(html)
+        html.setNextHandler(mp3)
+        mp3.setNextHandler(txt)
+
+        # Send a message down the chain
+        docx.checkRequest((fileName, fileExtension))
         
 if __name__ == "__main__":
     Driver.main()
