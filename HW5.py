@@ -6,11 +6,18 @@ import os # Run OS-specific commands
 import os.path # Inquire information about a supposed file path
 
 class Driver:
+    acceptedExtensions = ["docx", "mp3", "html", "txt"]
+
     @staticmethod
     def main():
         # Get the file name from the list of command line arguments
-        print(sys.argv[1])
-        fileName = sys.argv[1]
+        try:
+            fileName = sys.argv[1]
+        except:
+            # If the file does not exists, then no further operations
+            # can be performed, so the program should close itself.
+            print("No argument provided. Please include the name of the file that you would like to open.")
+            exit()
 
         # Make sure that the file exists
         if( not os.path.isfile(fileName)):
@@ -30,6 +37,13 @@ class Driver:
             # If the file has no extension, then no further operations
             # can be performed, so the program should close itself.
             print("File extension could not be determined.")
+            exit()
+
+        # Check to make sure the file extension is recognized
+        if(fileExtension not in Driver.acceptedExtensions):
+             # If the file extension is not recognized, then no further operations
+            # can be performed, so the program should close itself.
+            print(f"File extension .{fileExtension} is unknown.")
             exit()
         
         # Launch the appropriate app based on the file extension
@@ -52,7 +66,7 @@ class Driver:
             applicationName = "notepad"
         elif(fileExtension == "mp3"):
             applicationName = "wmplayer"
-        elif(fileExtension in ["htm", "html", "shtml", "xhtml"]):
+        elif(fileExtension == "html"):
             applicationName = "firefox"
         os.system(f"start {applicationName} {fileName}")
         
