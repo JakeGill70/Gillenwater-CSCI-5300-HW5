@@ -4,10 +4,10 @@
 import sys # Access command line arguments
 import os.path # Inquire information about a supposed file path
  # Access all of the different types of file extension handlers for the CoR pattern
-from Handler.Docx import Handler_docx
-from Handler.Html import Handler_html
-from Handler.Mp3 import Handler_mp3
-from Handler.Txt import Handler_txt
+from Handler.Docx import Handler_Docx
+from Handler.Html import Handler_Html
+from Handler.Mp3 import Handler_Mp3
+from Handler.Txt import Handler_Txt
 
 class Driver:
     acceptedExtensions = ["docx", "mp3", "html", "txt"]
@@ -66,7 +66,7 @@ class Driver:
 
         # Create instances of all of the different handlers
         #   and Establish the chain of responsibility
-        chainOfResponsibility = Handler_docx(Handler_html(Handler_mp3(Handler_txt())))
+        chainOfResponsibility = Handler_Docx(Handler_Html(Handler_Mp3(Handler_Txt())))
 
         # Send a message down the chain
         chainOfResponsibility.checkRequest((fileName, fileExtension))
