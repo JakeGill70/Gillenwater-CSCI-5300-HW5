@@ -65,18 +65,11 @@ class Driver:
     def openFileInApplication(fileName, fileExtension):
 
         # Create instances of all of the different handlers
-        docx = Handler_docx()
-        html = Handler_html()
-        mp3 =  Handler_mp3()
-        txt =  Handler_txt()
-
-        # Establish the chain of responsibility
-        docx.setNextHandler(html)
-        html.setNextHandler(mp3)
-        mp3.setNextHandler(txt)
+        #   and Establish the chain of responsibility
+        chainOfResponsibility = Handler_docx(Handler_html(Handler_mp3(Handler_txt())))
 
         # Send a message down the chain
-        docx.checkRequest((fileName, fileExtension))
+        chainOfResponsibility.checkRequest((fileName, fileExtension))
         
 if __name__ == "__main__":
     Driver.main()
