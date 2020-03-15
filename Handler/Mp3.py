@@ -1,7 +1,7 @@
 from Handler.File import Handler_File # Used for inheritance
 import os # Run OS-specific commands
 
-class Handler_mp3(Handler_File):
+class Handler_Mp3(Handler_File):
     def __init__(self, nextHandler=None):
         self.setNextHandler(nextHandler)
         self.myExtension = "mp3"
