@@ -2,8 +2,8 @@
 # Gillenwaterj@etsu.edu
 
 import sys # Access command line arguments
-import os # Run OS-specific commands
 import os.path # Inquire information about a supposed file path
+from Handler.Dispatcher import Dispatcher # Used to open the file with the appropriate program
 
 class Driver:
     acceptedExtensions = ["docx", "mp3", "html", "txt"]
@@ -59,16 +59,8 @@ class Driver:
 
     @staticmethod
     def openFileInApplication(fileName, fileExtension):
-        applicationName = ""
-        if(fileExtension == "docx"):
-            applicationName = "winword"
-        elif(fileExtension == "txt"):
-            applicationName = "notepad"
-        elif(fileExtension == "mp3"):
-            applicationName = "wmplayer"
-        elif(fileExtension == "html"):
-            applicationName = "firefox"
-        os.system(f"start {applicationName} {fileName}")
+        dispatcher = Dispatcher()
+        dispatcher.dispatch(fileName, fileExtension)
         
 if __name__ == "__main__":
     Driver.main()
