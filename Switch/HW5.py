@@ -2,16 +2,8 @@
 # Gillenwaterj@etsu.edu
 
 import sys # Access command line arguments
+import os # Run OS-specific commands
 import os.path # Inquire information about a supposed file path
-<<<<<<< HEAD:Switch/HW5.py
-from Handler.Dispatcher import Dispatcher # Used to open the file with the appropriate program
-=======
- # Access all of the different types of file extension handlers for the CoR pattern
-from Handler.Docx import Handler_Docx
-from Handler.Html import Handler_Html
-from Handler.Mp3 import Handler_Mp3
-from Handler.Txt import Handler_Txt
->>>>>>> SideChainCoR:SideChainOfResponsibility/HW5.py
 
 class Driver:
     acceptedExtensions = ["docx", "mp3", "html", "txt"]
@@ -67,18 +59,16 @@ class Driver:
 
     @staticmethod
     def openFileInApplication(fileName, fileExtension):
-<<<<<<< HEAD:Switch/HW5.py
-        dispatcher = Dispatcher()
-        dispatcher.dispatch(fileName, fileExtension)
-=======
-
-        # Create instances of all of the different handlers
-        #   and Establish the chain of responsibility
-        chainOfResponsibility = Handler_Docx(Handler_Html(Handler_Mp3(Handler_Txt())))
-
-        # Send a message down the chain
-        chainOfResponsibility.checkRequest((fileName, fileExtension))
->>>>>>> SideChainCoR:SideChainOfResponsibility/HW5.py
+        applicationName = ""
+        if(fileExtension == "docx"):
+            applicationName = "winword"
+        elif(fileExtension == "txt"):
+            applicationName = "notepad"
+        elif(fileExtension == "mp3"):
+            applicationName = "wmplayer"
+        elif(fileExtension == "html"):
+            applicationName = "firefox"
+        os.system(f"start {applicationName} {fileName}")
         
 if __name__ == "__main__":
     Driver.main()

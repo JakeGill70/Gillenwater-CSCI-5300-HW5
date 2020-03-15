@@ -1,6 +1,6 @@
 class Handler_Abstract:
-    def __init__(self, nextHandler=None):
-        self.setNextHandler(nextHandler)
+    def __init__(self):
+        self.setNextHandler(None)
     def setNextHandler(self, handler):
         self.nextHandler = handler
     def getNextHandler(self):

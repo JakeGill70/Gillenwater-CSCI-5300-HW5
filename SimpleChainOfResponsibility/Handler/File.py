@@ -6,8 +6,8 @@ from Handler.Abstract import Handler_Abstract # Used for inheritance
 #   such that this lineage will automatically process a request
 #   if it the correct fileType, and automatically passRequest() if not.
 class Handler_File(Handler_Abstract):
-    def __init__(self, nextHandler=None):
-        self.setNextHandler(nextHandler)
+    def __init__(self):
+        self.setNextHandler(None)
         self.myExtension = ""
     def passRequest(self, arg:(str, str)):
         if(self.getNextHandler() != None):

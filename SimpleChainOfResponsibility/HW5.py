@@ -3,15 +3,11 @@
 
 import sys # Access command line arguments
 import os.path # Inquire information about a supposed file path
-<<<<<<< HEAD:DispatchTable/HW5.py
-from Handler.Dispatcher import Dispatcher # Used to open the file with the appropriate program
-=======
  # Access all of the different types of file extension handlers for the CoR pattern
 from Handler.Docx import Handler_Docx
 from Handler.Html import Handler_Html
 from Handler.Mp3 import Handler_Mp3
 from Handler.Txt import Handler_Txt
->>>>>>> HardCoR:SimpleChainOfResponsibility/HW5.py
 
 class Driver:
     acceptedExtensions = ["docx", "mp3", "html", "txt"]
@@ -67,10 +63,6 @@ class Driver:
 
     @staticmethod
     def openFileInApplication(fileName, fileExtension):
-<<<<<<< HEAD:DispatchTable/HW5.py
-        dispatcher = Dispatcher()
-        dispatcher.dispatch(fileName, fileExtension)
-=======
 
         # Create instances of all of the different handlers
         docx = Handler_Docx()
@@ -85,7 +77,6 @@ class Driver:
 
         # Send a message down the chain
         docx.checkRequest((fileName, fileExtension))
->>>>>>> HardCoR:SimpleChainOfResponsibility/HW5.py
         
 if __name__ == "__main__":
     Driver.main()
