@@ -4,10 +4,10 @@
 import sys # Access command line arguments
 import os.path # Inquire information about a supposed file path
  # Access all of the different types of file extension handlers for the CoR pattern
-from Handler.Docx import Handler_docx
-from Handler.Html import Handler_html
-from Handler.Mp3 import Handler_mp3
-from Handler.Txt import Handler_txt
+from Handler.Docx import Handler_Docx
+from Handler.Html import Handler_Html
+from Handler.Mp3 import Handler_Mp3
+from Handler.Txt import Handler_Txt
 
 class Driver:
     acceptedExtensions = ["docx", "mp3", "html", "txt"]
@@ -65,10 +65,10 @@ class Driver:
     def openFileInApplication(fileName, fileExtension):
 
         # Create instances of all of the different handlers
-        docx = Handler_docx()
-        html = Handler_html()
-        mp3 =  Handler_mp3()
-        txt =  Handler_txt()
+        docx = Handler_Docx()
+        html = Handler_Html()
+        mp3 =  Handler_Mp3()
+        txt =  Handler_Txt()
 
         # Establish the chain of responsibility
         docx.setNextHandler(html)
